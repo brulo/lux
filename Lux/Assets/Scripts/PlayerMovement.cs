@@ -28,20 +28,23 @@ public class PlayerMovement : MonoBehaviour
 		jump = Input.GetButton("Jump");
 		h = Input.GetAxis("Horizontal");
 		v = Input.GetAxis("Vertical");
-		setSpeed();
+		SetSpeed();
 		MovementManagement(h, v);
 		Jump();
 	}
 
 	void OnCollisionEnter(Collision col){
 		if(col.gameObject.tag == "Ground"){
+			//Ground detection, though I'm sure this could be achieved through
+			//Raycasts or whatever
 			grounded = true;
 		}
 	}
 
 	void Jump(){
+		//General jump function
 		if(jump && grounded && jumpWait){
-			StartCoroutine(jumpWaitCo());
+			StartCoroutine(JumpWaitCo());
 			jumpWait = false;
 			jump = false;
 			grounded = false;
@@ -49,12 +52,15 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	IEnumerator jumpWaitCo(){
+	IEnumerator JumpWaitCo(){
+		//Purpose of this function is to prevent a sort of "double jump" when jumping onto a platform
+		//and hitting the edge.. Would cause the player to jump ~2x farther than normal
 		yield return new WaitForSeconds(.25f);
 		jumpWait = true;
 	}
 
-	void setSpeed(){
+	void SetSpeed(){
+		//Set speed so that you don't move faster in the diagonal directions
 		if(Mathf.Abs(h) > 0 && Mathf.Abs(v) > 0){
 			h = h * (speed * .75f) * Time.deltaTime;
 			v = v * (speed * .75f) * Time.deltaTime;
@@ -76,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 	void Rotating(float horizontal, float vertical){
+		//Rotates the character in the direction of movement
 		Vector3 targetDirection = new Vector3(horizontal, 0f, vertical);
 		Quaternion targetRoation = Quaternion.LookRotation(targetDirection, Vector3.up);
 		Quaternion newRotation = Quaternion.Lerp(rigbod.rotation, targetRoation, turnSmoothing * Time.deltaTime);
