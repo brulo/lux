@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PickUpBall : MonoBehaviour {
 
+	[Header("Throw Force")]
 	public float throwForce;
 
 	[Header("Ball Object")]
@@ -14,6 +15,10 @@ public class PickUpBall : MonoBehaviour {
 	private Transform throwTransform;
 	private Vector3 throwPosition;
 	private bool holdingBall;
+
+	public bool HoldingBall{
+		get{return holdingBall;}
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -42,7 +47,7 @@ public class PickUpBall : MonoBehaviour {
 		}
 	}
 
-	private void ThrowBall(){
+	private void ThrowBall(){//Throw the ball based on this throw script I found
 		throwPosition = throwTransform.position;
 		Vector3 dir = throwPosition - ballTransform.position;
 		float height = dir.y;
@@ -53,10 +58,10 @@ public class PickUpBall : MonoBehaviour {
 		float velocity = Mathf.Sqrt(dist * Physics.gravity.magnitude);
 
 		ball.GetComponent<Rigidbody>().velocity = (velocity * dir.normalized) * throwForce;
-		
+		holdingBall = false;
 	}
 
-	private void PickUp(){
+	private void PickUp(){ //"Picks" the ball up by setting the balls position to the "hold" position
 		ballTransform.position = holdTransform.position;
 		ball.transform.rotation = new Quaternion(0, 0, 0, 0);
 		holdingBall = true;
@@ -64,5 +69,8 @@ public class PickUpBall : MonoBehaviour {
 
 	private void CalcDistance(){ //Calculate distance between player and ball
 		distanceFromBall = Vector3.Distance(this.transform.position, ballTransform.position);
+		if(distanceFromBall > 2.5f){
+			holdingBall = false;
+		}
 	}
 }

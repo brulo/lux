@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
 	void Jump(){
 		//General jump function
-		if(jump && grounded && jumpWait){
+		if(jump && grounded && jumpWait && !GetComponent<PickUpBall>().HoldingBall){
 			StartCoroutine(JumpWaitCo());
 			jumpWait = false;
 			jump = false;
