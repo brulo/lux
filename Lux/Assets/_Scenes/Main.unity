@@ -643,8 +643,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: 98}
+  m_SizeDelta: {x: 160, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1346929624
 MonoBehaviour:
@@ -678,7 +678,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 'Controls: WASD or Arrow Keys
+
+    Pick Up: C or K'
 --- !u!222 &1346929625
 CanvasRenderer:
   m_ObjectHideFlags: 0
